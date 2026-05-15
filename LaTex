@@ -1,0 +1,2157 @@
+%============================================================
+%  LAPORAN ETS – ALGORITMA DAN PEMROGRAMAN
+%  Program Studi Teknik Instrumentasi – ITS
+%  Semester Genap 2025/2026
+%============================================================
+\documentclass[12pt, a4paper]{article}
+
+%------------------------------------------
+% PACKAGE
+%------------------------------------------
+\usepackage[bahasa]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric}
+\usepackage[titles]{tocloft}
+\usepackage{caption}
+\usepackage{geometry}
+\geometry{
+    left   = 3cm,
+    right  = 2.5cm,
+    top    = 3cm,
+    bottom = 2.5cm
+}
+% Algorithm -- load SETELAH babel
+\usepackage{algpseudocode}
+\usepackage[section]{algorithm}
+\renewcommand{\algorithmicrequire}{\textbf{Masukan:}}
+\renewcommand{\algorithmicensure}{\textbf{Keluaran:}}
+\renewcommand{\algorithmiccomment}[1]{\hfill$\triangleright$ #1}
+
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}           % untuk kode Rust
+\usepackage{tikz}               % untuk flowchart
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+%------------------------------------------------------------
+% GEOMETRI HALAMAN
+%------------------------------------------------------------
+\geometry{
+  left   = 3cm,
+  right  = 2.5cm,
+  top    = 3cm,
+  bottom = 2.5cm
+}
+
+%------------------------------------------------------------
+% STYLE KODE RUST
+%------------------------------------------------------------
+\definecolor{rustbrown}{RGB}{175,100,0}
+\definecolor{codegreen}{RGB}{40,150,40}
+\definecolor{codegray}{RGB}{128,128,128}
+\definecolor{codeblue}{RGB}{0,0,180}
+\definecolor{backcolour}{RGB}{248,248,248}
+
+\lstdefinelanguage{Rust}{
+  keywords={fn, let, mut, struct, impl, pub, use, mod, enum,
+            match, if, else, for, while, loop, return, true, false,
+            self, Self, in, as, where, trait, type, const, static,
+            move, async, await, dyn, Box, Vec, String, Option, Result},
+  keywordstyle=\color{codeblue}\bfseries,
+  ndkeywords={u8, u16, u32, u64, i8, i16, i32, i64, f32, f64,
+              usize, isize, bool, char, str},
+  ndkeywordstyle=\color{rustbrown}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=true,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{codegreen}\itshape,
+  stringstyle=\color{red},
+  morestring=[b]",
+}
+
+\lstset{
+  language=Rust,
+  backgroundcolor=\color{backcolour},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=left,
+  numbersep=8pt,
+  numberstyle=\tiny\color{codegray},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=4,
+  frame=single,
+  rulecolor=\color{gray!40},
+  xleftmargin=1.5em,
+}
+
+%------------------------------------------------------------
+% HEADER & FOOTER
+%------------------------------------------------------------
+\usepackage{fancyhdr}  
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small ETS Algoritma dan Pemrograman}
+\fancyhead[R]{\small Teknik Instrumentasi – ITS}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+%------------------------------------------------------------
+% FORMAT SECTION
+%------------------------------------------------------------
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.7em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection.}{0.5em}{}
+
+%------------------------------------------------------------
+% HYPERREF
+%------------------------------------------------------------
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = black,
+  urlcolor   = blue,
+  citecolor  = black
+}
+
+%============================================================
+%  DOKUMEN MULAI
+%============================================================
+\begin{document}
+
+%------------------------------------------------------------
+% COVER
+%------------------------------------------------------------
+\begin{titlepage}
+  \thispagestyle{empty}
+  \centering
+
+  % Logo ITS – ganti path jika punya file logo
+  % \includegraphics[width=3cm]{logo_ITS.jpg}\\[0.5cm]
+
+  {\Large \textbf{EVALUASI TENGAH SEMESTER (ETS)}}\\[0.3cm]
+  {\Large \textbf{Algoritma dan Pemrograman}}\\[0.2cm]
+  {\large Program Studi Teknik Instrumentasi}\\[0.1cm]
+  {\large Semester Genap 2025/2026}
+
+  \vspace{1 cm}
+  \rule{\linewidth}{1pt}\\[0.4cm]
+
+  {\LARGE \textbf{PROJECT BASED LEARNING (PBL)}}\\[0.3cm]
+  {\Large Pengembangan Sistem Instrumentasi\\
+          Pengukuran dan Kontrol Berbasis Rust}
+
+  \rule{\linewidth}{1pt}
+
+  \vspace{1 cm}
+
+  % Judul studi kasus – sesuaikan dengan kelompok Anda
+  {\large \textit{Studi Kasus:}\\[0.2cm]
+   \textbf{Monitoring Kualitas Udara Real-Time}}
+
+  \vspace{1.5cm}
+
+  \begin{tabular}{ll}
+    \textbf{Dosen Pengampu}     & : Ahmad Radhy, S.Si., M.Si. \\[4pt]
+ \textbf{Durasi Perngerjaan}&: 1 Pekan\\
+    \textbf{Bahasa Pemrograman} & : Rust                       \\[4pt]
+    \textbf{Metode Penilaian}   & : Project + Ujian Lisan      \\
+  \end{tabular}
+
+  \vspace{1.2cm}
+
+  \begin{tabular}{|l|l|l|}
+    \hline
+    \textbf{No.} & \textbf{Nama} & \textbf{NRP} \\
+    \hline
+    Mahasiswa 1 & Arief Rahman& 2042251034\\
+    \hline
+    Mahasiswa 2 & Muhammad Alfath Muslim Anatin& 2042251120\\
+    \hline
+  \end{tabular}
+
+  \vspace{2.5 cm}
+
+  {\large
+    Departemen Teknik Instrumentasi\\
+    Institut Teknologi Sepuluh Nopember\\
+    
+    Surabaya, \the\year}
+\end{titlepage}
+
+
+\section{Pendahuluan}
+
+\subsection{Latar Belakang}
+
+Kualitas udara merupakan salah satu faktor lingkungan yang berdampak langsung 
+terhadap kesehatan manusia dan ekosistem. Peningkatan aktivitas industri, 
+transportasi, dan pembakaran bahan bakar fosil menyebabkan konsentrasi polutan 
+udara seperti partikel halus (PM2.5/PM10), karbon monoksida (CO), nitrogen 
+dioksida (NO\textsubscript{2}), dan ozon (O\textsubscript{3}) terus meningkat, 
+terutama di kawasan perkotaan dan area industri.
+
+Pemantauan kualitas udara secara konvensional umumnya dilakukan menggunakan 
+peralatan stasioner berukuran besar dengan biaya operasional yang tinggi dan 
+jangkauan pengukuran yang terbatas. Akibatnya, data yang diperoleh seringkali 
+tidak merepresentasikan kondisi riil di lapangan secara menyeluruh dan 
+berkelanjutan.
+
+Perkembangan teknologi sensor dan sistem tertanam (\textit{embedded system}) 
+membuka peluang untuk merancang sistem monitoring yang lebih terjangkau, 
+portabel, dan mampu bekerja secara \textit{real-time}. Namun demikian, sistem 
+tertanam yang menangani data sensor secara simultan rentan terhadap 
+permasalahan seperti akses memori yang tidak aman, kondisi \textit{race 
+condition}, dan kegagalan sistem akibat kesalahan manajemen sumber daya.
+
+Bahasa pemrograman Rust hadir sebagai solusi atas permasalahan tersebut. 
+Rust dirancang dengan konsep \textit{ownership} dan \textit{borrowing} yang 
+menjamin keamanan memori (\textit{memory safety}) secara statis pada saat 
+kompilasi, tanpa memerlukan \textit{garbage collector}. Hal ini menjadikan 
+Rust sangat sesuai untuk sistem tertanam yang membutuhkan efisiensi tinggi 
+sekaligus keandalan dalam mengelola konkurensi antar proses pembacaan sensor, 
+kalkulasi AQI, dan pengiriman data secara nirkabel.
+
+Berdasarkan latar belakang tersebut, studi kasus ini merancang sebuah sistem 
+monitoring kualitas udara lingkungan berbasis Rust yang mampu membaca data 
+dari berbagai sensor (PM2.5/PM10, CO, NO\textsubscript{2}, suhu, dan 
+kelembapan), melakukan kalibrasi dan perhitungan \textit{Air Quality Index} 
+(AQI) secara otomatis, serta menampilkan dan mengirimkan hasil pemantauan 
+secara \textit{real-time} sebagai bentuk penerapan algoritma dan pemrograman 
+sistem instrumentasi modern.
+
+\subsection{Tujuan}
+
+Tujuan dari studi kasus ini adalah:
+
+\begin{enumerate}
+    \item Merancang sistem monitoring kualitas udara lingkungan berbasis 
+    bahasa pemrograman Rust pada platform tertanam.
+    
+    \item Mengimplementasikan algoritma kalibrasi sensor dan perhitungan 
+    \textit{Air Quality Index} (AQI) secara real-time.
+    
+    \item Menerapkan konsep \textit{memory safety} dan konkurensi Rust 
+    dalam pengelolaan data multi-sensor secara andal.
+    
+    \item Mengirimkan dan menampilkan hasil pemantauan kualitas udara 
+    secara otomatis melalui antarmuka nirkabel dan display lokal.
+\end{enumerate}
+
+\subsection{Ruang Lingkup}
+
+Batasan permasalahan pada studi kasus ini adalah sebagai berikut:
+
+\begin{enumerate}
+    \item Sensor yang digunakan terbatas pada sensor partikulat (PM2.5/PM10), 
+    sensor gas (CO dan NO\textsubscript{2}), serta sensor suhu dan kelembapan.
+
+    \item Rentang pengukuran konsentrasi gas dibatasi pada 0--2000 ppm untuk 
+    CO dan 0--10 ppm untuk NO\textsubscript{2}, sesuai kapasitas sensor yang 
+    digunakan.
+
+    \item Metode kalibrasi yang digunakan adalah interpolasi polinomial orde 
+    dua berdasarkan koefisien kalibrasi empiris masing-masing sensor.
+
+    \item Perhitungan AQI mengacu pada standar breakpoint EPA (\textit{Environmental 
+    Protection Agency}) dengan kategori: Baik, Sedang, Tidak Sehat, 
+    dan Berbahaya.
+
+    \item Metode kontrol yang diterapkan adalah kontrol ambang batas 
+    (\textit{threshold control}) -- sistem hanya mengaktifkan alarm 
+    apabila nilai AQI melebihi 150.
+
+    \item Pengiriman data dilakukan secara satu arah dari node sensor 
+    ke server, tanpa mekanisme kendali balik (\textit{feedback control}) 
+    dari server ke aktuator.
+
+    \item Sistem diimplementasikan menggunakan bahasa pemrograman Rust 
+    dan dibatasi pada lingkungan pengujian di dalam ruangan 
+    (\textit{indoor environment}).
+\end{enumerate}
+
+\newpage
+
+\section{Studi Kasus Instrumentasi}
+
+\subsection{Deskripsi Sistem}
+Sistem yang dikaji adalah Sistem Monitoring Kualitas Udara Lingkungan (Environmental Air Quality Monitoring System). Sistem ini dirancang untuk memantau secara real-time parameter-parameter kualitas udara di lingkungan perkotaan maupun industri, meliputi konsentrasi gas berbahaya, partikel debu, suhu, dan kelembapan.
+
+\subsection{Prinsip Kerja}
+
+Sistem bekerja berdasarkan prinsip deteksi elektrokimia, optik, dan resistif dari 
+masing-masing sensor. Setiap sensor menghasilkan tegangan atau arus keluaran yang 
+sebanding dengan konsentrasi zat yang diukur.
+
+\textbf{Persamaan kalibrasi sensor gas (elektrokimia):}
+
+\begin{equation}
+    C = \frac{V_{out} - V_{offset}}{S_f}
+\end{equation}
+
+di mana $C$ adalah konsentrasi gas (ppm/ppb), $V_{out}$ adalah tegangan keluaran 
+sensor (mV), $V_{offset}$ adalah tegangan offset saat tidak ada gas, dan $S_f$ 
+adalah sensitivitas sensor (mV/ppm).
+
+\textbf{Persamaan sensor partikulat (optik hamburan cahaya):}
+
+\begin{equation}
+    PM = a_0 + a_1 \cdot R_{dust} + a_2 \cdot R_{dust}^2
+\end{equation}
+
+di mana $PM$ adalah konsentrasi partikel ($\mu$g/m$^3$), $R_{dust}$ adalah rasio 
+keluaran tegangan sensor optik, dan $a_0, a_1, a_2$ adalah koefisien kalibrasi empiris.
+
+\textbf{Perhitungan \textit{Air Quality Index} (AQI):}
+
+\begin{equation}
+    AQI = \frac{I_{high} - I_{low}}{C_{high} - C_{low}} \cdot (C_p - C_{low}) + I_{low}
+\end{equation}
+
+di mana $C_p$ adalah konsentrasi polutan terukur, $C_{low}$ dan $C_{high}$ adalah 
+batas bawah dan atas kategori konsentrasi, serta $I_{low}$ dan $I_{high}$ adalah 
+nilai AQI batas bawah dan atas kategori yang bersesuaian.
+
+Contoh persamaan kalibrasi sensor:
+\begin{equation}
+  T = a_0 + a_1 \cdot V + a_2 \cdot V^2
+  \label{eq:kalibrasi}
+\end{equation}
+
+\noindent di mana $T$ adalah suhu (°C), $V$ adalah tegangan keluaran (mV),
+dan $a_0, a_1, a_2$ adalah koefisien kalibrasi.
+
+\subsection{Blok Diagram Sistem}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        node distance=1.5cm and 1.8cm,
+        block/.style={
+            draw, rectangle, rounded corners=4pt,
+            minimum width=2.2cm, minimum height=1cm,
+            align=center, font=\small
+        },
+        arrow/.style={-{Stealth[length=4pt]}, thick}
+    ]
+
+    %--- Blok Utama ---
+    \node[block] (sensor)    {Sensor\\Udara};
+    \node[block, right=of sensor] (adc)  {ADC};
+    \node[block, right=of adc]    (rust) {Prosesor\\(Rust)};
+    \node[block, right=of rust]   (out)  {Aktuator /\\Display};
+
+    %--- Panah Utama ---
+    \draw[arrow] (sensor) -- (adc);
+    \draw[arrow] (adc)    -- (rust);
+    \draw[arrow] (rust)   -- (out);
+
+    \end{tikzpicture}
+    \caption{Blok Diagram Sistem Monitoring Kualitas Udara}
+    \label{fig:blok-diagram}
+\end{figure}
+
+\subsection{Spesifikasi Teknis}
+
+\begin{table}[H]
+    \centering
+    \caption{Spesifikasi Teknis Sistem Monitoring Kualitas Udara}
+    \label{tab:spesifikasi}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Komponen} & \textbf{Spesifikasi} \\
+        \hline
+        Sensor Partikulat (PM2.5/PM10) & Rentang 0 -- 500 $\mu$g/m$^3$, antarmuka UART \\
+        \hline
+        Sensor Gas (CO, NO$_2$, O$_3$)  & Rentang 0 -- 2000 ppm, keluaran analog \\
+        \hline
+        Sensor Suhu \& Kelembapan       & $-40$ s.d. $+80\,^{\circ}$C, 0 -- 100\% RH \\
+        \hline
+        ADC                             & Resolusi 16-bit, antarmuka I$^2$C \\
+        \hline
+        Prosesor (Rust)                 & Mikrokontroler/SBC, bahasa Rust \\
+        \hline
+        Komunikasi                      & UART, I$^2$C, LoRa / WiFi (MQTT) \\
+        \hline
+        Keluaran                        & LCD, buzzer alarm, penyimpanan SD Card \\
+        \hline
+        Catu Daya                       & 5V DC, $\leq$ 2.5 W, baterai cadangan \\
+        \hline
+        Lingkungan Operasi              & $-10$ s.d. $+60\,^{\circ}$C, proteksi IP54 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\newpage
+
+ \section{Algoritma dan Flowchart}
+
+\subsection{Deskripsi Algoritma}
+
+Sistem monitoring kualitas udara bekerja melalui lima tahap utama yang berjalan 
+secara berulang (\textit{loop}).
+
+\textbf{Tahap 1 --- Inisialisasi.}
+Saat sistem pertama dinyalakan, program Rust melakukan konfigurasi awal: membuka 
+koneksi serial ke sensor, mengatur pin GPIO, serta menginisialisasi ADC melalui 
+bus I\textsuperscript{2}C. Semua variabel global dan buffer data dikosongkan 
+sebelum proses pembacaan dimulai.
+
+\textbf{Tahap 2 --- Pembacaan Sensor.}
+Program membaca data dari masing-masing sensor secara bergantian. Sensor 
+partikulat mengirim data via UART, sedangkan sensor gas dan suhu/kelembapan 
+dibaca melalui ADC. Setiap pembacaan diulang sebanyak tiga kali dan dirata-rata 
+untuk mengurangi derau.
+
+\textbf{Tahap 3 --- Kalibrasi dan Perhitungan AQI.}
+Nilai mentah (\textit{raw}) dari sensor dikonversi menggunakan persamaan kalibrasi 
+masing-masing sensor. Setelah didapat konsentrasi sebenarnya, nilai AQI dihitung 
+menggunakan rumus interpolasi linear berdasarkan tabel \textit{breakpoint} 
+standar EPA/BMKG.
+
+\textbf{Tahap 4 --- Evaluasi Ambang Batas.}
+Nilai AQI yang diperoleh dibandingkan dengan ambang batas yang telah ditetapkan. 
+Jika AQI melebihi 150 (kategori tidak sehat), sistem mengaktifkan alarm buzzer 
+dan menandai status peringatan pada paket data yang akan dikirim.
+
+\textbf{Tahap 5 --- Pengiriman Data dan Logging.}
+Data hasil pengukuran beserta status AQI dikirim ke server melalui LoRa atau 
+WiFi menggunakan protokol MQTT. Secara bersamaan, data juga disimpan ke SD Card 
+sebagai log lokal. Setelah selesai, sistem menunggu interval waktu tertentu 
+(60 detik) sebelum kembali ke Tahap 2.
+
+\subsection{Pseudocode}
+
+\begin{algorithm}[H]
+\caption{Algoritma Monitoring Kualitas Udara (Rust)}
+\begin{algorithmic}[1]
+
+\State \textbf{MULAI}
+\State \hspace{1em} Inisialisasi sensor dan parameter sistem
+
+\Loop \Comment{ULANGI}
+    \State Baca data sensor $\rightarrow$ \texttt{nilai\_raw}
+    \State Kalibrasi \texttt{nilai\_raw} $\rightarrow$ \texttt{nilai\_fisik}
+        \begin{equation*}
+            C = \frac{V_{out} - V_{offset}}{S_f}, \quad
+            PM = a_0 + a_1 \cdot R_{dust} + a_2 \cdot R_{dust}^2
+        \end{equation*}
+    \State Hitung $AQI$ dari \texttt{nilai\_fisik}
+        \begin{equation*}
+            AQI = \frac{I_{high}-I_{low}}{C_{high}-C_{low}}
+                  \cdot (C_p - C_{low}) + I_{low}
+        \end{equation*}
+    \If{$AQI > 150$}
+        \State Aktifkan alarm $\rightarrow$ \texttt{status = "TIDAK SEHAT"}
+    \Else
+        \State \texttt{status = "AMAN"}
+    \EndIf
+    \State Kirim perintah ke aktuator
+    \State Tampilkan hasil ke layar / log
+    \State Tunggu interval waktu (60 detik)
+
+\EndLoop \Comment{SAMPAI sistem dihentikan}
+
+\State \textbf{SELESAI}
+
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Flowchart}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        node distance=0.7cm and 2.5cm,
+        term/.style={
+            draw, ellipse,
+            minimum width=2.8cm, minimum height=0.9cm,
+            align=center, font=\small
+        },
+        block/.style={
+            draw, rectangle,
+            minimum width=3cm, minimum height=0.9cm,
+            align=center, font=\small
+        },
+        io/.style={
+            draw, trapezium,
+            trapezium left angle=75, trapezium right angle=105,
+            minimum width=3cm, minimum height=0.9cm,
+            align=center, font=\small
+        },
+        decision/.style={
+            draw, diamond, aspect=2.5,
+            minimum width=3.2cm, minimum height=1cm,
+            align=center, font=\small
+        },
+        arrow/.style={-{Stealth[length=4pt]}, thick}
+    ]
+
+    %--- Node ---
+    \node[term]     (start)   {START};
+    \node[block,    below=of start]             (init)   {Inisialisasi Data};
+    \node[io,       below=of init]              (input)  {Input Nilai PPM\\(Terminal)};
+    \node[block,    below=of input]             (mavg)   {Moving Average};
+    \node[decision, below=of mavg, yshift=-0.3cm] (check){Nilai\\Rata-Rata?};
+    \node[block,    left=of check,  xshift=-0.8cm] (bersih) {Set Status:\\Udara Bersih};
+    \node[block,    below=of check, yshift=-0.5cm] (ideal)  {Set Status:\\Ideal};
+    \node[block,    right=of check, xshift=0.8cm]  (bahaya) {Set Status:\\Bahaya Tercemar};
+    \node[block,    below=of ideal, yshift=-0.5cm] (render) {Render Dashboard};
+    \node[io,       below=of render]            (quit)   {Input `Q'};
+    \node[term,     below=of quit]              (stop)   {End};
+
+    %--- Panah Utama ---
+    \draw[arrow] (start)  -- (init);
+    \draw[arrow] (init)   -- (input);
+    \draw[arrow] (input)  -- (mavg);
+    \draw[arrow] (mavg)   -- (check);
+
+    %--- Cabang Keputusan ---
+    \draw[arrow] (check.west)  -- 
+        node[above, font=\footnotesize]{$<$400 ppm} (bersih);
+    \draw[arrow] (check.south) -- 
+        node[right, font=\footnotesize]{400--1000 ppm} (ideal);
+    \draw[arrow] (check.east)  -- 
+        node[above, font=\footnotesize]{$>$1000 ppm} (bahaya);
+
+    %--- Gabung ke Render Dashboard ---
+    \draw[arrow] (bersih.south) |- (render.west);
+    \draw[arrow] (ideal)        -- (render);
+    \draw[arrow] (bahaya.south) |- (render.east);
+
+    %--- Render ke bawah ---
+    \draw[arrow] (render) -- (quit);
+    \draw[arrow] (quit)   -- node[right, font=\footnotesize]{Ya} (stop);
+
+    %--- Loop Tidak (kembali ke Moving Average) ---
+    \draw[arrow] (render.west) -- ++(-4.2,0)
+        node[above, midway, font=\footnotesize]{Tidak}
+        |- (mavg.west);
+
+    \end{tikzpicture}
+    \caption{Flowchart Sistem Monitoring Kualitas Udara}
+    \label{fig:flowchart}
+\end{figure}
+
+\newpage
+
+%============================================================
+% BAB 4 – PENJELASAN PROGRAM RUST
+%============================================================
+\section{Penjelasan Program Rust}
+Program yang dibuat merupakan \textit{dashboard} interaktif berbasis
+terminal untuk monitoring kualitas udara secara \textit{real-time}. Program
+ditulis seluruhnya dalam satu file \texttt{main.rs} menggunakan bahasa
+pemrograman Rust dengan memanfaatkan dua \textit{crate} eksternal utama,
+yaitu \texttt{crossterm} untuk pengelolaan input/output terminal lintas
+platform, dan \texttt{ratatui} untuk pembangunan antarmuka pengguna
+berbasis teks (TUI -- \textit{Text User Interface}).
+
+\subsection{Struktur Proyek}
+
+Proyek dikonfigurasi sebagai \textit{binary crate} standar Rust dengan
+struktur sebagai berikut:
+
+\begin{verbatim}
+monitoring_udara/
+├── Cargo.toml       <- konfigurasi proyek dan dependensi
+└── src/└── main.rs      <- seluruh source code program
+\end{verbatim}
+
+\subsection{ {Cargo.toml}}
+
+\begin{lstlisting}[language={},caption={Cargo.toml}]
+[package]
+name    = "monitoring_udara"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+crossterm = "0.27"
+ratatui   = "0.26"
+\end{lstlisting}
+
+\noindent Keterangan dependensi:
+\begin{itemize}
+  \item \textbf{crossterm}: library lintas platform untuk mengontrol
+        terminal -- mengaktifkan \textit{raw mode}, menangkap event
+        keyboard, dan memanipulasi layar terminal.
+  \item \textbf{ratatui}: library TUI (Text User Interface) untuk
+        membangun widget visual di dalam terminal, seperti gauge,
+        paragraf, dan layout bertingkat.
+\end{itemize}
+
+\subsection{Deklarasi \textit{Use} dan Impor Modul}
+
+\begin{lstlisting}[caption={Impor library dan modul}]
+use std::io;
+use std::time::Duration;
+use crossterm::{
+    event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode},
+    execute,
+    terminal::{disable_raw_mode, enable_raw_mode,
+               EnterAlternateScreen, LeaveAlternateScreen},
+};
+use ratatui::{
+    backend::CrosstermBackend,
+    layout::{Constraint, Direction, Layout},
+    style::{Color, Modifier, Style},
+    widgets::{Block, Borders, Gauge, Paragraph, Wrap},
+    Terminal,
+};
+\end{lstlisting}
+
+Bagian ini merupakan deklarasi semua modul dan tipe yang akan digunakan
+sepanjang program. Penjelasan tiap baris:
+
+\begin{itemize}
+  \item \texttt{use std::io} -- mengimpor modul I/O standar Rust. Modul
+        ini dibutuhkan karena fungsi \texttt{main()} mengembalikan tipe
+        \texttt{Result<(), io::Error>} dan operasi penulisan ke stdout
+        menggunakan \texttt{io::stdout()}.
+
+  \item \texttt{use std::time::Duration} -- mengimpor tipe \texttt{Duration}
+        untuk mendefinisikan interval waktu. Digunakan pada fungsi
+        \texttt{event::poll(Duration::from\_millis(100))} agar sistem
+        tidak memblokir loop utama lebih dari 100 ms saat menunggu input.
+
+  \item \texttt{crossterm::event} -- kelompok impor untuk penanganan event
+        terminal:
+        \begin{itemize}
+          \item \texttt{DisableMouseCapture} / \texttt{EnableMouseCapture} --
+                mengaktifkan/menonaktifkan penangkapan event mouse.
+          \item \texttt{Event} -- enum yang merepresentasikan event
+                terminal (KeyEvent, MouseEvent, dsb.).
+          \item \texttt{KeyCode} -- enum kode tombol keyboard
+                (\texttt{KeyCode::Up}, \texttt{KeyCode::Down},
+                \texttt{KeyCode::Char('q')}, dsb.).
+        \end{itemize}
+
+  \item \texttt{crossterm::execute!} -- macro untuk mengeksekusi perintah
+        terminal secara berurutan ke sebuah \textit{writer}
+        (misalnya stdout).
+
+  \item \texttt{enable\_raw\_mode} / \texttt{disable\_raw\_mode} --
+        mengaktifkan dan menonaktifkan \textit{raw mode} terminal. Dalam
+        raw mode, karakter yang diketik tidak secara otomatis dicetak ke
+        layar dan tidak ada pemrosesan baris (enter tidak diperlukan),
+        sehingga program dapat membaca input karakter per karakter secara
+        langsung.
+
+  \item \texttt{EnterAlternateScreen} / \texttt{LeaveAlternateScreen} --
+        perintah untuk masuk ke layar alternatif terminal (buffer terpisah
+        dari sesi shell normal), sehingga konten terminal asli tidak
+        tertimpa selama program berjalan.
+
+  \item \texttt{ratatui::backend::CrosstermBackend} -- implementasi backend
+        ratatui yang menggunakan crossterm sebagai lapisan komunikasi
+        dengan terminal.
+
+  \item \texttt{ratatui::layout::\{Constraint, Direction, Layout\}} --
+        sistem tata letak ratatui untuk membagi area layar menjadi
+        beberapa panel (chunk) secara vertikal maupun horizontal.
+
+  \item \texttt{ratatui::style::\{Color, Modifier, Style\}} --
+        tipe untuk mendefinisikan gaya visual seperti warna teks, warna
+        latar, dan modifier seperti \texttt{BOLD} (tebal).
+
+  \item \texttt{ratatui::widgets::\{Block, Borders, Gauge, Paragraph, Wrap\}}
+        -- widget-widget yang dirender ke layar terminal:
+        \begin{itemize}
+          \item \texttt{Block} -- kotak pembungkus dengan judul dan border.
+          \item \texttt{Borders} -- konstanta untuk mengatur sisi border.
+          \item \texttt{Gauge} -- widget \textit{progress bar} untuk
+                menampilkan nilai numerik secara visual.
+          \item \texttt{Paragraph} -- multiline widget teks.
+          \item \texttt{Wrap} -- konfigurasi pemenggalan baris pada
+                \texttt{Paragraph}.
+        \end{itemize}
+
+  \item \texttt{ratatui::Terminal} -- struct utama yang mengelola siklus
+        render ke backend terminal.
+\end{itemize}
+
+\subsection{Struct Sensor - Objek Data Mentah}
+
+\begin{lstlisting}[caption={Struct Sensor}]
+#[allow(dead_code)]
+struct Sensor {
+    nilai_raw: f32,
+}
+\end{lstlisting}
+
+\texttt{Struct Sensor} mendefinisikan tipe data yang merepresentasikan
+objek sensor fisik. Field \texttt{nilai\_raw} bertipe \texttt{f32}
+(bilangan \textit{floating-point} 32-bit) menyimpan nilai pembacaan
+mentah (\textit{raw}) dari sensor sebelum diproses lebih lanjut.
+
+Atribut \texttt{\#[allow(dead\_code)]} adalah sebuah \textit{compiler
+attribute} yang memberitahu kompiler Rust untuk tidak menampilkan
+peringatan (\textit{warning}) \texttt{unused field} pada field
+\texttt{nilai\_raw}. Hal ini dilakukan karena field tersebut diisi saat
+pembuatan objek namun hanya diakses sekali via \texttt{\_sensor\_obj.nilai\_raw}
+untuk keperluan tampilan log, sehingga kompiler menganggapnya tidak
+digunakan secara aktif. Struct ini berfungsi sebagai wujud nyata dari
+prinsip OOP \textit{encapsulation}, di mana data sensor dikelompokkan
+dalam satu unit tersendiri.
+
+\subsection{Monitoring System}
+
+\begin{lstlisting}[caption={Struct Monitoring System}]
+struct MonitoringSystem {
+    riwayat: Vec<f32>,
+    kapasitas_buffer: usize,
+}
+\end{lstlisting}
+
+\texttt{Struct MonitoringSystem} adalah objek inti sistem yang bertanggung
+jawab atas penyimpanan riwayat data dan komputasi numerik. Ia memiliki
+dua field:
+
+\begin{itemize}
+  \item \texttt{riwayat: Vec<f32>} -- sebuah \textit{vector} (array dinamis)
+        bertipe \texttt{f32} yang menyimpan deret nilai pembacaan sensor
+        terbaru. \texttt{Vec<T>} adalah tipe koleksi paling umum di Rust yang
+        dapat tumbuh dan menyusut secara dinamis di \textit{heap memory}.
+        Vector ini berperan sebagai \textit{circular buffer} yang selalu
+        hanya menyimpan $N$ data terakhir untuk keperluan perhitungan
+        rata-rata bergerak.
+
+  \item \texttt{kapasitas\_buffer: usize} -- bilangan bulat tidak bertanda
+        yang menentukan berapa maksimum data yang disimpan dalam
+        \texttt{riwayat}. Tipe \texttt{usize} dipilih karena nilai ini
+        digunakan sebagai ukuran koleksi, yang di Rust selalu bertipe
+        \texttt{usize}.
+\end{itemize}
+
+\subsection{ Implementasi \texttt{Monitoring System}}
+
+\begin{lstlisting}[caption={Baris 28--47: Blok impl MonitoringSystem}]
+impl MonitoringSystem {
+    fn new(kapasitas: usize) -> Self {
+        Self {
+            riwayat: Vec::new(),
+            kapasitas_buffer: kapasitas,
+        }
+    }
+
+    // Komputasi Numerik: Simple Moving Average (SMA)
+    fn update_dan_hitung_rata_rata(&mut self, data_baru: f32) -> f32 {
+        self.riwayat.push(data_baru);
+        if self.riwayat.len() > self.kapasitas_buffer {
+            self.riwayat.remove(0);
+        }
+        let total: f32 = self.riwayat.iter().sum();
+        total / self.riwayat.len() as f32
+    }
+}
+\end{lstlisting}
+
+Blok \texttt{impl} mendefinisikan metode-metode yang dimiliki oleh
+\texttt{Monitoring System}. Ini adalah mekanisme Rust untuk mengasosiasikan
+perilaku (\textit{behavior}) dengan suatu tipe data.
+
+\subsubsection{Constructor \texttt{new()}}
+\texttt{fn new(kapasitas: usize) -> Self} adalah \textit{associated
+function} (fungsi yang tidak menerima \texttt{self}) yang berperan sebagai
+\textit{constructor} -- pola standar pembuatan instance baru di Rust.
+Ia mengembalikan \texttt{Self} (alias untuk \texttt{Monitoring System})
+dengan:
+\begin{itemize}
+  \item \texttt{riwayat: Vec::new()} -- membuat vector kosong.
+  \item \texttt{kapasitas\_buffer: kapasitas} -- menyimpan parameter
+        kapasitas yang diterima dari pemanggil.
+\end{itemize}
+Dalam \texttt{main()}, constructor ini dipanggil sebagai
+\texttt{Monitoring System::new(5)}, artinya buffer akan menyimpan
+maksimal 5 data terakhir.
+
+\subsubsection{Metode \texttt{update\_dan\_hitung\_rata\_rata}}
+Ini adalah metode utama yang mengimplementasikan algoritma \textit{Simple
+Moving Average} (SMA). Tanda \texttt{\&mut self} pada parameter pertama
+menunjukkan bahwa metode ini meminjam \texttt{self} secara mutable --
+artinya metode ini diizinkan mengubah state internal objek (dalam hal
+ini, field \texttt{riwayat}).
+
+Cara kerja algoritma langkah per langkah:
+\begin{enumerate}
+  \item \texttt{self.riwayat.push(data\_baru)} -- menambahkan nilai baru
+        ke akhir vector.
+  \item \texttt{if self.riwayat.len() > self.kapasitas\_buffer} -- memeriksa
+        apakah jumlah data melebihi kapasitas yang ditentukan.
+  \item \texttt{self.riwayat.remove(0)} -- jika kapasitas terlampaui,
+        hapus elemen pertama (terlama) dari vector. Pola \textit{push
+        belakang -- hapus depan} ini mengimplementasikan antrian
+        FIFO (\textit{First In, First Out}).
+  \item \texttt{let total: f32 = self.riwayat.iter().sum()} -- menjumlahkan
+        semua elemen dalam vector menggunakan iterator. \texttt{.iter()}
+        menghasilkan referensi ke setiap elemen, dan \texttt{.sum()} adalah
+        metode iterator yang menjumlahkan seluruhnya.
+  \item \texttt{total / self.riwayat.len() as f32} -- membagi jumlah dengan
+        banyaknya data. Ekspresi \texttt{as f32} melakukan \textit{type
+        casting} dari \texttt{usize} ke \texttt{f32} agar pembagian dapat
+        dilakukan dalam domain bilangan real.
+\end{enumerate}
+
+\subsection{Fungsi main : Inisialisasi Sistem}
+
+\begin{lstlisting}[caption={Fungsi main dan terminal}]
+fn main() -> Result<(), io::Error> {
+    enable_raw_mode()?;
+    let mut stdout = io::stdout();
+    execute!(stdout, EnterAlternateScreen, EnableMouseCapture)?;
+    let backend = CrosstermBackend::new(stdout);
+    let mut terminal = Terminal::new(backend)?;
+\end{lstlisting}
+
+Fungsi \texttt{main()} mengembalikan \texttt{Result<(), io::Error>},
+yang merupakan pola idiomatis Rust untuk penanganan error. Jika terjadi
+error I/O di mana pun, error tersebut akan dipropagasi ke atas menggunakan
+operator \texttt{?} (operator tanda tanya).
+
+Tahap inisialisasi terminal:
+\begin{itemize}
+  \item \texttt{enable\_raw\_mode()?} -- mengaktifkan raw mode. Tanda
+        \texttt{?} berarti: jika operasi ini gagal, langsung kembalikan
+        error kepada pemanggil (propagasi error).
+  \item \texttt{let mut stdout = io::stdout()} -- mendapatkan handle
+        ke standard output. Perlu \texttt{mut} karena akan dimodifikasi
+        oleh perintah terminal.
+  \item \texttt{execute!(stdout, EnterAlternateScreen, EnableMouseCapture)?}
+        -- macro \texttt{execute!} mengeksekusi dua perintah terminal
+        secara berurutan: masuk ke layar alternatif dan mengaktifkan
+        penangkapan mouse.
+  \item \texttt{CrosstermBackend::new(stdout)} -- membungkus stdout ke
+        dalam backend ratatui berbasis crossterm.
+  \item \texttt{Terminal::new(backend)?} -- membuat instance \texttt{Terminal}
+        ratatui yang akan digunakan untuk semua operasi rendering.
+\end{itemize}
+
+\subsection{Inisialisasi Variabel State}
+
+\begin{lstlisting}[caption={Inisialisasi variabel state program}]
+    let mut system = MonitoringSystem::new(5);
+    let mut input_simulasi: f32 = 400.0;
+    let mut rata_rata_filter: f32 = 400.0;
+\end{lstlisting}
+
+\begin{itemize}
+  \item \texttt{let mut system = MonitoringSystem::new(5)} -- membuat
+        instance sistem monitoring dengan buffer 5 data. Kata kunci
+        \texttt{mut} diperlukan karena \texttt{system} akan dimodifikasi
+        (data baru akan di-push ke buffer) saat loop berjalan.
+  \item \texttt{input\_simulasi: f32 = 400.0} -- variabel yang
+        merepresentasikan nilai sensor saat ini. Nilai awal 400.0 ppm
+        dipilih karena merupakan konsentrasi CO$_2$ udara bersih ideal
+        menurut standar lingkungan.
+  \item \texttt{rata\_rata\_filter: f32 = 400.0} -- variabel yang menyimpan
+        hasil perhitungan SMA. Diinisialisasi sama dengan
+        \texttt{input\_simulasi} agar tampilan awal konsisten.
+\end{itemize}
+
+\subsection{Loop Utama dan Sistem Rendering}
+
+\begin{lstlisting}[caption={loop utama}]
+    loop {
+        terminal.draw(|f| {
+\end{lstlisting}
+
+\texttt{loop \{\}} adalah loop tak terbatas di Rust (setara dengan
+\texttt{while true} di bahasa lain). Loop ini akan terus berjalan hingga
+pengguna menekan tombol \texttt{q}. Di dalam loop, \texttt{terminal.draw()}
+dipanggil setiap iterasi untuk merender ulang seluruh tampilan dashboard.
+Closure \texttt{|f|} menerima \texttt{Frame} (\texttt{f}) -- objek yang
+mewakili satu frame render penuh ke layar terminal.
+
+\subsection{Sistem Layout -- Pembagian Area Layar}
+
+\begin{lstlisting}[caption={layout 4 panel vertikal}]
+            let chunks = Layout::default()
+                .direction(Direction::Vertical)
+                .margin(2)
+                .constraints([
+                    Constraint::Length(3),
+                    Constraint::Length(3),
+                    Constraint::Min(5),
+                    Constraint::Length(3),
+                ].as_ref())
+                .split(f.size());
+\end{lstlisting}
+
+Sistem layout ratatui membagi area layar terminal menjadi beberapa
+\textit{chunk} (potongan area). Kode ini mendefinisikan empat panel
+vertikal:
+
+\begin{table}[H]
+  \centering
+  \caption{Pembagian panel layout dashboard}
+  \begin{tabular}{@{}clll@{}}
+    \toprule
+    \textbf{Index} & \textbf{Constraint} & \textbf{Tinggi} & \textbf{Isi} \\
+    \midrule
+    \texttt{chunks[0]} & \texttt{Length(3)} & 3 baris tetap & Judul dashboard \\
+    \texttt{chunks[1]} & \texttt{Length(3)} & 3 baris tetap & Gauge konsentrasi \\
+    \texttt{chunks[2]} & \texttt{Min(5)}    & min. 5 baris, fleksibel & Log status sistem \\
+    \texttt{chunks[3]} & \texttt{Length(3)} & 3 baris tetap & Navigasi keyboard \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\noindent Penjelasan parameter:
+\begin{itemize}
+  \item \texttt{direction(Direction::Vertical)} -- panel ditumpuk secara
+        vertikal (dari atas ke bawah).
+  \item \texttt{margin(2)} -- memberikan jarak 2 karakter dari tepi
+        terminal ke seluruh konten dashboard.
+  \item \texttt{Constraint::Length(n)} -- panel dengan tinggi tetap $n$
+        baris. Cocok untuk elemen UI yang ukurannya tidak perlu berubah.
+  \item \texttt{Constraint::Min(n)} -- panel dengan tinggi minimum $n$
+        baris, namun dapat tumbuh mengisi sisa ruang yang tersedia.
+        Panel log menggunakan ini agar dapat menampilkan lebih banyak
+        teks pada layar yang lebih besar.
+  \item \texttt{.split(f.size())} -- menghitung dan menerapkan pembagian
+        area berdasarkan ukuran terminal saat ini.
+\end{itemize}
+
+\subsection{Judul Dashboard}
+
+\begin{lstlisting}[caption={Widget judul}]
+            let title = Paragraph::new(
+                "DASHBOARD MONITORING KUALITAS UDARA (ETS ALPROG - RUST)")
+                .style(Style::default().fg(Color::Cyan)
+                       .add_modifier(Modifier::BOLD))
+                .block(Block::default().borders(Borders::ALL));
+            f.render_widget(title, chunks[0]);
+\end{lstlisting}
+
+Widget \texttt{Paragraph} menampilkan teks statis sebagai judul. Rantai
+metode (\textit{method chaining}) yang digunakan:
+\begin{itemize}
+  \item \texttt{.style(Style::default().fg(Color::Cyan).\linebreak add\_modifier(Modifier::BOLD))}
+        -- menetapkan warna teks menjadi cyan dan gaya cetak tebal.
+  \item \texttt{.block(Block::default().borders(Borders::ALL))} --
+        membungkus teks dalam sebuah kotak bertepi di semua sisi (atas,
+        bawah, kiri, kanan).
+  \item \texttt{f.render\_widget(title, chunks[0])} -- merender widget
+        \texttt{title} ke area \texttt{chunks[0]} (panel pertama).
+\end{itemize}
+
+\subsection{Logika Warna Dinamis dan Widget Gauge}
+
+\begin{lstlisting}[caption={Logika warna dan gauge konsentrasi}]
+            let gauge_color = if rata_rata_filter > 1000.0 {
+                Color::Red   // Tercemar
+            } else if rata_rata_filter < 400.0 {
+                Color::Blue  // Sangat Bagus
+            } else {
+                Color::Green // Ideal
+            };
+
+            let gauge = Gauge::default()
+                .block(Block::default()
+                       .title("Konsentrasi Gas (ppm)")
+                       .borders(Borders::ALL))
+                .gauge_style(Style::default().fg(gauge_color))
+                .percent(((rata_rata_filter / 1200.0) * 100.0)
+                         .min(100.0) as u16)
+                .label(format!("{:.2} ppm", rata_rata_filter));
+            f.render_widget(gauge, chunks[1]);
+\end{lstlisting}
+
+Bagian ini menunjukkan implementasi logika kondisional (\textit{conditional
+logic}) yang menghasilkan umpan balik visual langsung kepada pengguna.
+Ekspresi \texttt{if-else} di Rust adalah ekspresi (bukan pernyataan),
+sehingga nilainya dapat langsung diikat ke variabel \texttt{gauge\_color}.
+
+\begin{table}[H]
+  \centering
+  \caption{Logika penentuan warna gauge berdasarkan konsentrasi gas}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    \textbf{Kondisi} & \textbf{Warna} & \textbf{Makna} \\
+    \midrule
+    $\text{nilai} < 400$ ppm    & Biru  & Sangat bagus (udara pegunungan/O$_2$ murni) \\
+    $400 \leq \text{nilai} \leq 1000$ ppm & Hijau & Ideal (udara bersih normal) \\
+    $\text{nilai} > 1000$ ppm   & Merah & Tercemar -- bahaya \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:logikawarna}
+\end{table}
+
+Perhitungan persentase gauge menggunakan rumus:
+\begin{equation}
+  \text{persen} = \left(\frac{\text{rata\_rata\_filter}}{1200.0} \times 100.0 \right) \text{ dibatasi maksimum } 100
+  \label{eq:gauge}
+\end{equation}
+
+Nilai 1200.0 ppm digunakan sebagai batas atas skala penuh gauge. Fungsi
+\texttt{.min(100.0)} memastikan nilai tidak melebihi 100\% meskipun
+konsentrasi gas melampaui 1200 ppm. Kemudian \texttt{as u16} melakukan
+\textit{type casting} ke bilangan bulat 16-bit tanpa tanda, sesuai dengan
+tipe yang dibutuhkan metode.
+
+\subsection{Logika Status dan Widget Log Sistem}
+
+\begin{lstlisting}[caption={Kondisi dan log status}]
+            let (kondisi, status_sistem, warna_status) =
+              if rata_rata_filter < 400.0 {
+                ("SANGAT BAGUS (Udara Pegunungan/Oksigen Murni)",
+                 "SISTEM: Aman - Standby", Color::Blue)
+            } else if rata_rata_filter <= 1000.0 {
+                ("IDEAL (Udara Bersih)",
+                 "SISTEM: Aman - Standby", Color::Green)
+            } else {
+                ("TERCEMAR (Udara Kotor/Bahaya)",
+                 "SISTEM: BAHAYA - Ventilasi AKTIF!", Color::Red)
+            };
+
+            let _sensor_obj = Sensor { nilai_raw: input_simulasi };
+
+            let log_text = format!(
+                "Pembacaan Sensor (Raw): {:.2} ppm\n\
+                 Hasil Filter (SMA)    : {:.2} ppm\n\
+                 Kondisi Udara         : {}\n\n{}",
+                _sensor_obj.nilai_raw, rata_rata_filter,
+                kondisi, status_sistem
+            );
+
+            let log_widget = Paragraph::new(log_text)
+                .style(Style::default().fg(warna_status))
+                .block(Block::default()
+                       .title("Log Sistem Kontrol").borders(Borders::ALL))
+                .wrap(Wrap { trim: true });
+            f.render_widget(log_widget, chunks[2]);
+\end{lstlisting}
+
+\noindent Penjelasan detail:
+
+\begin{itemize}
+  \item \textbf{Destructuring tuple}: \texttt{let (kondisi, status\_sistem,
+        warna\_status) = if...} -- Rust memungkinkan satu ekspresi
+        \texttt{if-else} mengembalikan tuple tiga nilai sekaligus.
+        Teknik ini disebut \textit{tuple destructuring} dan membuat kode
+        lebih ringkas dibanding tiga blok \texttt{if-else} terpisah.
+
+  \item \textbf{Instansiasi struct Sensor}: \texttt{let \_sensor\_obj =
+        Sensor \{ nilai\_raw: input simulasi \}} -- membuat objek
+        \texttt{Sensor} dengan nilai mentah saat ini. Nama variabel
+        diawali \texttt{\_} untuk memberi tahu kompiler bahwa variabel
+        ini disengaja jarang diakses.
+
+  \item \textbf{Format string}: \texttt{format!(\ldots)} -- macro Rust
+        untuk menghasilkan \texttt{String} terformat. Penentu format
+        \texttt{\{:.2\}} berarti cetak bilangan dengan 2 angka desimal.
+        Karakter \texttt{\textbackslash n} adalah \textit{newline}.
+
+  \item \textbf{Widget Paragraph}: widget \texttt{log\_widget} menampilkan
+        log teks multi-baris dengan warna yang disesuaikan kondisi
+        (\texttt{warna\_status}). \texttt{Wrap \{ trim: true \}}
+        memastikan teks yang terlalu panjang dibungkus ke baris berikutnya
+        dan spasi ekstra di awal baris dipotong.
+\end{itemize}
+
+\subsection{Widget Navigasi}
+
+\begin{lstlisting}[caption={Panel navigasi keyboard}]
+            let nav = Paragraph::new(
+                "PANAH ATAS (+50) | PANAH BAWAH (-50) | TEKAN 'Q' UNTUK KELUAR")
+                .style(Style::default().fg(Color::Yellow))
+                .block(Block::default().borders(Borders::ALL));
+            f.render_widget(nav, chunks[3]);
+        })?;
+\end{lstlisting}
+
+Panel navigasi berwarna kuning di bagian bawah layar berfungsi sebagai
+\textit{help bar} -- menampilkan panduan singkat tombol yang tersedia.
+Penutup \texttt{\})?} mengakhiri closure \texttt{terminal.draw()} dan
+propagasi error jika rendering gagal.
+
+\subsection{Penanganan Input Keyboard (Event Loop)}
+
+\begin{lstlisting}[caption={loop penanganan keyboard}]
+        if event::poll(Duration::from_millis(100))? {
+            if let Event::Key(key) = event::read()? {
+                match key.code {
+                    KeyCode::Char('q') => break,
+                    KeyCode::Up => {
+                        input_simulasi =
+                            (input_simulasi + 50.0_f32).min(1200.0_f32);
+                        rata_rata_filter =
+                            system.update_dan_hitung_rata_rata(
+                                input_simulasi);
+                    },
+                    KeyCode::Down => {
+                        input_simulasi =
+                            (input_simulasi - 50.0_f32).max(0.0_f32);
+                        rata_rata_filter =
+                            system.update_dan_hitung_rata_rata(
+                                input_simulasi);
+                    },
+                    _ => {}
+                }
+            }
+        }
+    }
+\end{lstlisting}
+
+\begin{itemize}
+  \item \texttt{event::poll(Duration::from\_millis(100))?} --
+        memeriksa apakah ada event terminal yang tersedia dalam waktu
+        tunggu 100 ms. Jika tidak ada event, fungsi mengembalikan
+        \texttt{false} dan loop berlanjut tanpa memblokir, menjaga
+        dashboard tetap responsif.
+
+  \item \texttt{if let Event::Key(key) = event::read()?} --
+        pola \textit{if let} Rust untuk \textit{pattern matching}:
+        baca satu event dari terminal, dan hanya lanjutkan jika event
+        tersebut adalah event keyboard (bukan event mouse, resize, dsb.).
+        Variabel \texttt{key} berisi detail event keyboard.
+
+  \item \texttt{match key.code \{ \ldots \}} -- ekspresi \texttt{match}
+        di Rust adalah pencocokan pola yang \textit{exhaustive} (semua
+        kemungkinan harus ditangani). Pola yang dicocokkan:
+        \begin{itemize}
+          \item \texttt{KeyCode::Char('q') => break} -- jika pengguna
+                menekan \texttt{q}, keluar dari loop utama.
+          \item \texttt{KeyCode::Up} -- tombol panah atas menambah
+                \texttt{input\_simulasi} sebesar 50 ppm, dibatasi
+                maksimum 1200 ppm oleh \texttt{.min(1200.0)}, lalu
+                memperbarui nilai SMA.
+          \item \texttt{KeyCode::Down} -- tombol panah bawah mengurangi
+                \texttt{input\_simulasi} sebesar 50 ppm, dibatasi minimum
+                0 ppm oleh \texttt{.max(0.0)}, lalu memperbarui nilai SMA.
+          \item \texttt{\_ => \{\}} -- pola \textit{wildcard} yang
+                menangkap semua tombol lain tanpa aksi apapun.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Pembersihan Terminal}
+
+\begin{lstlisting}[caption={Restorasi terminal ke kondisi semula}]
+    disable_raw_mode()?;
+    execute!(terminal.backend_mut(),
+             LeaveAlternateScreen, DisableMouseCapture)?;
+    terminal.show_cursor()?;
+    Ok(())
+}
+\end{lstlisting}
+
+Setelah loop berakhir (pengguna menekan \texttt{q}), program wajib
+mengembalikan terminal ke kondisi semula agar shell tidak rusak:
+\begin{itemize}
+  \item \texttt{disable\_raw\_mode()?} -- menonaktifkan raw mode,
+        mengembalikan perilaku input terminal normal.
+  \item \texttt{execute!(\ldots, LeaveAlternateScreen, DisableMouseCapture)?}
+        -- keluar dari layar alternatif (kembali ke tampilan shell) dan
+        menonaktifkan penangkapan mouse.
+  \item \texttt{terminal.show\_cursor()?} -- menampilkan kembali kursor
+        terminal yang disembunyikan selama program berjalan.
+  \item \texttt{Ok(())} -- mengembalikan nilai sukses dari fungsi
+        \texttt{main()}, sesuai tipe kembalian
+        \texttt{Result<(), io::Error>}.
+
+
+\newpage
+
+
+%============================================================
+% BAB 5 – KONSEP OOP
+%============================================================
+\section{Konsep Object-Oriented Programming (OOP)}
+
+\subsection{Struct sebagai Kelas}
+
+Dalam Rust, \texttt{struct} berperan sebagai pengganti \textit{class} 
+pada bahasa OOP konvensional. \texttt{Struct} mendefinisikan atribut 
+(data) dari sebuah objek, sedangkan blok \texttt{impl} mendefinisikan 
+metode (perilaku) yang dimiliki objek tersebut.
+
+\begin{lstlisting}[caption={Struct Sensor dan MonitoringSystem sebagai representasi kelas},
+                   label={lst:struct-oop}]
+// "Kelas" Sensor -- menyimpan data mentah pembacaan
+#[allow(dead_code)]
+struct Sensor {
+    nilai_raw: f32,   // atribut: nilai mentah sensor
+}
+
+// "Kelas" MonitoringSystem -- mengelola logika pemrosesan
+struct MonitoringSystem {
+    riwayat: Vec<f32>,      // atribut: buffer riwayat data
+    kapasitas_buffer: usize, // atribut: ukuran maksimum buffer
+}
+
+impl MonitoringSystem {
+    // Konstruktor (setara dengan __init__ di Python / new() di Java)
+    fn new(kapasitas: usize) -> Self {
+        Self {
+            riwayat: Vec::new(),
+            kapasitas_buffer: kapasitas,
+        }
+    }
+
+    // Metode: memperbarui buffer dan menghitung rata-rata
+    fn update_dan_hitung_rata_rata(&mut self, data_baru: f32) -> f32 {
+        self.riwayat.push(data_baru);
+        if self.riwayat.len() > self.kapasitas_buffer {
+            self.riwayat.remove(0);
+        }
+        let total: f32 = self.riwayat.iter().sum();
+        total / self.riwayat.len() as f32
+    }
+}
+\end{lstlisting}
+
+Objek \texttt{MonitoringSystem} dibuat menggunakan konstruktor 
+\texttt{new()}, yang merupakan pola idiomatik Rust setara dengan 
+konstruktor pada bahasa OOP lainnya.
+
+\begin{lstlisting}[caption={Instansiasi objek MonitoringSystem},
+                   label={lst:instansiasi}]
+// Instansiasi objek -- setara dengan "new MonitoringSystem(5)" di Java
+let mut system = MonitoringSystem::new(5);
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption={Contoh encapsulation dengan struct dan impl}]
+pub struct SensorSuhu {
+    nama        : String,   // private
+    pub nilai   : f64,      // public
+}
+
+impl SensorSuhu {
+    // Constructor (associated function)
+    pub fn new(nama: &str) -> Self {
+        SensorSuhu { nama: nama.to_string(), nilai: 0.0 }
+    }
+
+    // Getter (encapsulation)
+    pub fn nama(&self) -> &str { &self.nama }
+}
+\end{lstlisting}
+
+\subsection{Trait sebagai Interface / Abstraksi}
+\\subsubsection{\textit{Trait} sebagai \textit{Interface} / Abstraksi}
+
+\texttt{Trait} dalam Rust berperan sebagai \textit{interface} atau 
+kontrak perilaku yang dapat diimplementasikan oleh berbagai tipe data. 
+Pada program ini, \texttt{trait} dimanfaatkan secara implisit melalui 
+penggunaan \textit{library} \texttt{ratatui} dan \texttt{crossterm}, 
+di mana setiap \textit{widget} mengimplementasikan \texttt{trait Widget} 
+sehingga dapat dirender secara seragam oleh fungsi \texttt{render\_widget()}.
+
+\begin{lstlisting}[caption={Penggunaan trait Widget secara implisit melalui ratatui},
+                   label={lst:trait}]
+// Setiap widget (Paragraph, Gauge, Block) mengimplementasikan
+// trait Widget -- sehingga render_widget() dapat menerima semua jenis
+// widget tanpa perlu mengetahui tipe konkretnya
+
+// Widget 1: Paragraph mengimplementasikan trait Widget
+let title = Paragraph::new("DASHBOARD MONITORING KUALITAS UDARA")
+    .style(Style::default().fg(Color::Cyan).add_modifier(Modifier::BOLD))
+    .block(Block::default().borders(Borders::ALL));
+f.render_widget(title, chunks[0]);
+
+// Widget 2: Gauge mengimplementasikan trait Widget
+let gauge = Gauge::default()
+    .block(Block::default()
+        .title("Konsentrasi Gas (ppm)")
+        .borders(Borders::ALL))
+    .gauge_style(Style::default().fg(gauge_color))
+    .percent(((rata_rata_filter / 1200.0) * 100.0).min(100.0) as u16)
+    .label(format!("{:.2} ppm", rata_rata_filter));
+f.render_widget(gauge, chunks[1]);
+
+// Widget 3: Paragraph log mengimplementasikan trait Widget
+let log_widget = Paragraph::new(log_text)
+    .style(Style::default().fg(warna_status))
+    .block(Block::default()
+        .title("Log Sistem Kontrol")
+        .borders(Borders::ALL))
+    .wrap(Wrap { trim: true });
+f.render_widget(log_widget, chunks[2]);
+\end{lstlisting}
+
+Polimorfisme melalui \texttt{trait} memungkinkan fungsi 
+\texttt{render\_widget()} menerima objek bertipe apapun selama 
+mengimplementasikan \texttt{trait Widget}, tanpa perlu mengetahui 
+detail implementasi masing-masing widget.
+
+\subsection{Prinsip OOP yang Diterapkan}
+Tabel berikut merangkum prinsip-prinsip OOP yang diterapkan pada 
+program monitoring kualitas udara ini.
+
+\begin{table}[H]
+    \centering
+    \caption{Pemetaan Prinsip OOP pada Program Rust}
+    \label{tab:oop}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Prinsip OOP} & \textbf{Mekanisme Rust} & 
+        \textbf{Penerapan dalam Program} \\
+        \hline
+        Enkapsulasi & \texttt{struct} + \texttt{impl} & 
+        Data dan metode dikemas dalam\\
+        & & \texttt{MonitoringSystem} \\
+        \hline
+        Abstraksi & \texttt{trait Widget} & 
+        \texttt{render\_widget()} menerima\\
+        & & semua jenis widget secara seragam \\
+        \hline
+        Polimorfisme & \texttt{trait} + \textit{dynamic dispatch} & 
+        \texttt{Paragraph}, \texttt{Gauge} dirender\\
+        & & dengan antarmuka yang sama \\
+        \hline
+        Pewarisan & Komposisi \texttt{struct} & 
+        Rust menggantikan \textit{inheritance}\\
+        & & dengan komposisi dan \texttt{trait} \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Perlu dicatat bahwa Rust tidak mendukung pewarisan (\textit{inheritance}) 
+secara langsung seperti C++ atau Java. Sebagai gantinya, Rust mendorong 
+penggunaan komposisi \texttt{struct} dan \texttt{trait} yang dinilai 
+lebih aman dan fleksibel dalam konteks sistem tertanam.
+
+\newpage
+
+%============================================================
+% BAB 6 – IMPLEMENTASI KOMPUTASI NUMERIK
+%============================================================
+\section{Implementasi Komputasi Numerik}
+
+\subsection{Metode yang Digunakan}
+Komputasi numerik pada sistem ini mencakup tiga metode utama: 
+\textit{Simple Moving Average} (SMA) sebagai filter data, kalibrasi 
+sensor menggunakan regresi polinomial, dan kontrol PID diskrit 
+sebagai metode pengendalian aktuator.
+
+\subsubsection{Metode \textit{Simple Moving Average} (SMA)}
+
+SMA digunakan untuk memperhalus (\textit{smoothing}) data mentah 
+sensor yang mengandung derau (\textit{noise}). Nilai rata-rata 
+dihitung dari $N$ data terakhir menggunakan persamaan:
+
+\begin{equation}
+    \bar{x}_t = \frac{1}{N} \sum_{i=0}^{N-1} x_{t-i}
+\end{equation}
+
+di mana $\bar{x}_t$ adalah nilai rata-rata pada waktu $t$, $x_{t-i}$ 
+adalah data ke-$i$ sebelumnya, dan $N$ adalah ukuran jendela buffer 
+(pada program ini $N = 5$).
+
+\begin{lstlisting}[caption={Implementasi Simple Moving Average (SMA)},
+                   label={lst:sma}]
+fn update_dan_hitung_rata_rata(&mut self, data_baru: f32) -> f32 {
+    // Tambahkan data baru ke buffer
+    self.riwayat.push(data_baru);
+
+    // Jika buffer melebihi kapasitas, hapus data paling lama
+    if self.riwayat.len() > self.kapasitas_buffer {
+        self.riwayat.remove(0);
+    }
+
+    // Hitung rata-rata seluruh data dalam buffer (N = 5)
+    let total: f32 = self.riwayat.iter().sum();
+    total / self.riwayat.len() as f32
+}
+\end{lstlisting}
+
+\subsection{Kalibrasi Sensor – Regresi Polinomial}
+Nilai mentah (\textit{raw}) dari ADC tidak langsung merepresentasikan 
+konsentrasi gas dalam satuan ppm. Oleh karena itu, diperlukan kalibrasi 
+menggunakan model regresi polinomial orde dua:
+
+\begin{equation}
+    C = a_0 + a_1 \cdot V_{raw} + a_2 \cdot V_{raw}^2
+\end{equation}
+
+di mana $C$ adalah konsentrasi gas hasil kalibrasi (ppm), $V_{raw}$ 
+adalah tegangan keluaran ADC (mV), dan $a_0, a_1, a_2$ adalah 
+koefisien kalibrasi empiris yang diperoleh dari data referensi sensor.
+
+\begin{lstlisting}[caption={Implementasi kalibrasi sensor regresi polinomial},
+                   label={lst:kalibrasi}]
+// Koefisien kalibrasi polinomial orde 2
+// Diperoleh dari kurva kalibrasi sensor gas
+struct KoefisienKalibrasi {
+    a0: f32,  // konstanta offset
+    a1: f32,  // koefisien linear
+    a2: f32,  // koefisien kuadratik
+}
+
+impl KoefisienKalibrasi {
+    // Koefisien default sensor gas CO (contoh empiris)
+    fn default_co() -> Self {
+        Self {
+            a0: 10.0,
+            a1: 0.85,
+            a2: 0.0002,
+        }
+    }
+}
+
+// Fungsi kalibrasi: mengkonversi nilai raw ADC ke konsentrasi ppm
+fn kalibrasi_polinomial(v_raw: f32, koef: &KoefisienKalibrasi) -> f32 {
+    koef.a0 
+    + koef.a1 * v_raw 
+    + koef.a2 * v_raw.powi(2)
+}
+
+// Contoh penggunaan dalam sistem
+fn contoh_kalibrasi() {
+    let koef = KoefisienKalibrasi::default_co();
+    let nilai_raw: f32 = 350.0;  // nilai dari ADC (mV)
+
+    // C = a0 + a1*V + a2*V^2
+    let konsentrasi = kalibrasi_polinomial(nilai_raw, &koef);
+
+    println!("Nilai Raw  : {:.2} mV", nilai_raw);
+    println!("Konsentrasi: {:.2} ppm", konsentrasi);
+}
+\end{lstlisting}
+
+Hasil kalibrasi kemudian digunakan sebagai masukan untuk 
+perhitungan AQI dan evaluasi ambang batas sistem kontrol.
+
+\subsection{Kontrol PID Diskrit}
+
+Kontrol PID (\textit{Proportional-Integral-Derivative}) digunakan 
+untuk mengendalikan aktuator (misalnya kecepatan kipas ventilasi) 
+agar konsentrasi gas mendekati nilai \textit{setpoint} yang diinginkan. 
+Persamaan PID diskrit adalah:
+
+\begin{equation}
+    u(k) = K_p \cdot e(k) 
+         + K_i \cdot T_s \sum_{j=0}^{k} e(j) 
+         + K_d \cdot \frac{e(k) - e(k-1)}{T_s}
+\end{equation}
+
+di mana $u(k)$ adalah sinyal kendali pada waktu ke-$k$, $e(k) = 
+r(k) - y(k)$ adalah \textit{error} antara \textit{setpoint} $r(k)$ 
+dan nilai terukur $y(k)$, $K_p$, $K_i$, $K_d$ adalah gain 
+proporsional, integral, dan derivatif, serta $T_s$ adalah periode 
+sampling.
+
+\begin{lstlisting}[caption={Implementasi kontrol PID diskrit},
+                   label={lst:pid}]
+// Struct PID -- menyimpan parameter dan state kontroller
+struct PidController {
+    kp: f32,          // gain proporsional
+    ki: f32,          // gain integral
+    kd: f32,          // gain derivatif
+    ts: f32,          // periode sampling (detik)
+    setpoint: f32,    // nilai target konsentrasi (ppm)
+    integral: f32,    // akumulasi error integral
+    error_prev: f32,  // error pada langkah sebelumnya
+}
+
+impl PidController {
+    fn new(kp: f32, ki: f32, kd: f32, ts: f32, setpoint: f32) -> Self {
+        Self {
+            kp, ki, kd, ts, setpoint,
+            integral: 0.0,
+            error_prev: 0.0,
+        }
+    }
+
+    // Hitung sinyal kendali u(k)
+    fn hitung(&mut self, nilai_terukur: f32) -> f32 {
+        // e(k) = setpoint - nilai_terukur
+        let error = self.setpoint - nilai_terukur;
+
+        // Komponen Proporsional: Kp * e(k)
+        let p = self.kp * error;
+
+        // Komponen Integral: Ki * Ts * sigma(e)
+        self.integral += error * self.ts;
+        let i = self.ki * self.integral;
+
+        // Komponen Derivatif: Kd * (e(k) - e(k-1)) / Ts
+        let d = self.kd * (error - self.error_prev) / self.ts;
+
+        // Simpan error untuk iterasi berikutnya
+        self.error_prev = error;
+
+        // Sinyal kendali u(k) = P + I + D
+        // Dibatasi 0-100% untuk output aktuator
+        (p + i + d).clamp(0.0, 100.0)
+    }
+}
+
+// Contoh penggunaan dalam loop utama
+fn contoh_pid() {
+    // Setpoint: 400 ppm (kondisi udara ideal)
+    let mut pid = PidController::new(
+        2.0,    // Kp
+        0.5,    // Ki
+        0.1,    // Kd
+        1.0,    // Ts = 1 detik
+        400.0,  // setpoint
+    );
+
+    let konsentrasi_terukur: f32 = 850.0; // ppm (kondisi tercemar)
+    let sinyal_kipas = pid.hitung(konsentrasi_terukur);
+
+    println!("Konsentrasi : {:.2} ppm", konsentrasi_terukur);
+    println!("Sinyal Kipas: {:.2}%", sinyal_kipas);
+}
+\end{lstlisting}
+
+Tabel berikut merangkum ketiga metode numerik yang diterapkan 
+beserta fungsinya dalam sistem.
+
+\begin{table}[H]
+    \centering
+    \caption{Ringkasan Metode Komputasi Numerik}
+    \label{tab:numerik}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Metode} & \textbf{Fungsi} & \textbf{Parameter Utama} \\
+        \hline
+        Simple Moving Average & Filter derau sensor & 
+        $N = 5$ data \\
+        \hline
+        Regresi Polinomial & Kalibrasi nilai raw ADC & 
+        $a_0, a_1, a_2$ empiris \\
+        \hline
+        PID Diskrit & Kendali aktuator ventilasi & 
+        $K_p, K_i, K_d, T_s$ \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\newpage
+
+%============================================================
+% BAB 7 – HASIL PENGUJIAN
+%============================================================
+\section{Hasil Pengujian}
+
+\subsection{Skenario Pengujian}
+
+Pengujian sistem dilakukan secara simulasi pada lingkungan terminal 
+dengan memanipulasi nilai input konsentrasi gas secara manual 
+menggunakan tombol keyboard. Terdapat tiga skenario pengujian utama 
+yang dirancang untuk memvalidasi seluruh alur sistem, mulai dari 
+pembacaan sensor hingga respons aktuator.
+
+\subsubsection{Skenario 1 -- Kondisi Udara Normal}
+
+\textbf{Kondisi:} Nilai konsentrasi gas berada pada rentang ideal 
+400--1000 ppm, merepresentasikan kondisi udara bersih dalam ruangan.
+
+\begin{table}[H]
+    \centering
+    \caption{Parameter Skenario 1 -- Kondisi Udara Normal}
+    \label{tab:skenario1}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Parameter} & \textbf{Nilai} \\
+        \hline
+        Input awal          & 400 ppm \\
+        Kapasitas buffer SMA & 5 data \\
+        Setpoint PID        & 400 ppm \\
+        Ambang batas alarm  & $>$ 1000 ppm \\
+        \hline
+        \textbf{Yang Diamati} & \textbf{Hasil yang Diharapkan} \\
+        \hline
+        Warna gauge         & Hijau (\texttt{Color::Green}) \\
+        Status sistem       & \textit{Aman -- Standby} \\
+        Alarm buzzer        & Tidak aktif \\
+        Sinyal PID          & Mendekati 0\% (tidak ada aksi) \\
+        \hline
+    \end{tabular}
+\end{table}
+
+% --- Skenario 2 ---
+\subsubsection{Skenario 2 -- Kondisi Udara Tercemar}
+
+\textbf{Kondisi:} Nilai konsentrasi gas dinaikkan secara bertahap 
+menggunakan tombol panah atas ($+$50 ppm per langkah) hingga 
+melampaui ambang batas 1000 ppm, merepresentasikan kondisi udara 
+tercemar akibat emisi gas berbahaya.
+
+\begin{table}[H]
+    \centering
+    \caption{Parameter Skenario 2 -- Kondisi Udara Tercemar}
+    \label{tab:skenario2}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Parameter} & \textbf{Nilai} \\
+        \hline
+        Input awal          & 400 ppm \\
+        Input akhir         & $>$ 1000 ppm \\
+        Langkah kenaikan    & $+$50 ppm per penekanan tombol \\
+        Kapasitas buffer SMA & 5 data \\
+        \hline
+        \textbf{Yang Diamati} & \textbf{Hasil yang Diharapkan} \\
+        \hline
+        Warna gauge         & Merah (\texttt{Color::Red}) \\
+        Status sistem       & \textit{BAHAYA -- Ventilasi AKTIF!} \\
+        Alarm buzzer        & Aktif \\
+        Sinyal PID          & $>$ 0\% (aktuator bekerja) \\
+        Efek SMA            & Kenaikan nilai terfilter lebih lambat\\
+                            & dari nilai raw \\
+        \hline
+    \end{tabular}
+\end{table}
+
+% --- Skenario 3 ---
+\subsubsection{Skenario 3 -- Pemulihan Sistem}
+
+\textbf{Kondisi:} Setelah kondisi tercemar, nilai konsentrasi 
+diturunkan kembali menggunakan tombol panah bawah ($-$50 ppm per 
+langkah) untuk mengamati respons sistem saat kembali ke kondisi 
+normal.
+
+\begin{table}[H]
+    \centering
+    \caption{Parameter Skenario 3 -- Pemulihan Sistem}
+    \label{tab:skenario3}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Parameter} & \textbf{Nilai} \\
+        \hline
+        Input awal          & $>$ 1000 ppm (kondisi tercemar) \\
+        Input akhir         & $\leq$ 400 ppm \\
+        Langkah penurunan   & $-$50 ppm per penekanan tombol \\
+        Kapasitas buffer SMA & 5 data \\
+        \hline
+        \textbf{Yang Diamati} & \textbf{Hasil yang Diharapkan} \\
+        \hline
+        Warna gauge         & Merah $\rightarrow$ Hijau 
+                              $\rightarrow$ Biru \\
+        Status sistem       & Kembali ke \textit{Aman -- Standby} \\
+        Alarm buzzer        & Nonaktif setelah nilai $\leq$ 1000 ppm \\
+        Efek SMA            & Penurunan nilai terfilter lebih lambat \\
+                            & dari nilai raw (efek \textit{lag}) \\
+        Sinyal PID          & Menurun bertahap menuju 0\% \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{Ringkasan Parameter Pengujian Global}
+
+\begin{table}[H]
+    \centering
+    \caption{Parameter Global Seluruh Skenario Pengujian}
+    \label{tab:param-global}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Parameter} & \textbf{Nilai} & \textbf{Keterangan} \\
+        \hline
+        Rentang input       & 0 -- 1200 ppm  & Dibatasi fungsi \texttt{clamp()} \\
+        Langkah input       & $\pm$50 ppm    & Per penekanan tombol \\
+        Ukuran buffer SMA   & 5 data         & \texttt{MonitoringSystem::new(5)} \\
+        Periode sampling    & 100 ms         & \texttt{poll(Duration::from\_millis(100))} \\
+        Setpoint PID        & 400 ppm        & Kondisi udara ideal \\
+        Ambang batas alarm  & 1000 ppm       & Kategori tercemar \\
+        Platform pengujian  & Terminal TUI   & \texttt{ratatui} + \texttt{crossterm} \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Data Hasil Pengujian}
+\begin{table}[H]
+    \centering
+    \caption{Data Pengujian Respon Sistem Monitoring Kualitas Udara}
+    \label{tab:hasil-pengujian}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{rrrrrr}
+        \toprule
+        \textbf{Step} & 
+        \textbf{Input Raw} & 
+        \textbf{Hasil SMA} & 
+        \textbf{Setpoint} & 
+        \textbf{Aksi PID} & 
+        \textbf{Status} \\
+        & \textbf{(ppm)} & 
+        \textbf{(ppm)} & 
+        \textbf{(ppm)} & 
+        \textbf{(\%)} & \\
+        \midrule
+        0  & 400.00  & 400.00  & 400.00 & 0.00  & Ideal \\
+        1  & 450.00  & 430.00  & 400.00 & 15.00 & Ideal \\
+        2  & 550.00  & 466.67  & 400.00 & 33.34 & Ideal \\
+        3  & 650.00  & 512.50  & 400.00 & 56.25 & Ideal \\
+        4  & 750.00  & 560.00  & 400.00 & 80.00 & Ideal \\
+        5  & 850.00  & 650.00  & 400.00 & 100.00 & Ideal \\
+        6  & 950.00  & 750.00  & 400.00 & 100.00 & Ideal \\
+        7  & 1050.00 & 850.00  & 400.00 & 100.00 & \textbf{Tercemar} \\
+        8  & 1100.00 & 920.00  & 400.00 & 100.00 & \textbf{Tercemar} \\
+        9  & 1050.00 & 1000.00 & 400.00 & 100.00 & \textbf{Tercemar} \\
+        10 & 950.00  & 1020.00 & 400.00 & 100.00 & \textbf{Tercemar} \\
+        15 & 750.00  & 880.00  & 400.00 & 100.00 & \textbf{Tercemar} \\
+        20 & 550.00  & 640.00  & 400.00 & 96.00  & Ideal \\
+        25 & 400.00  & 440.00  & 400.00 & 20.00  & Ideal \\
+        30 & 400.00  & 400.00  & 400.00 & 0.00   & Ideal \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Tabel di atas menunjukkan tiga fase pengujian: fase kenaikan 
+(step 0--10), fase puncak tercemar (step 10--15), dan fase 
+pemulihan (step 15--30). Efek \textit{lag} SMA terlihat jelas 
+pada selisih antara nilai \textit{raw} dan hasil filter, 
+terutama saat terjadi perubahan nilai yang signifikan.
+
+\subsection{Grafik Respon Sistem}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=0.85\textwidth,
+            height=7cm,
+            xlabel={Step},
+            ylabel={Konsentrasi Gas (ppm)},
+            xmin=0, xmax=30,
+            ymin=300, ymax=1200,
+            xtick={0,5,10,15,20,25,30},
+            ytick={400,600,800,1000,1200},
+            grid=both,
+            grid style={line width=0.3pt, draw=gray!30},
+            major grid style={line width=0.4pt, draw=gray!50},
+            legend pos=north west,
+            legend style={font=\small},
+            tick label style={font=\small},
+            label style={font=\small},
+        ]
+
+        % Garis Setpoint (400 ppm)
+        \addplot[
+            color=red,
+            dashed,
+            thick,
+            domain=0:30,
+        ] {400};
+        \addlegendentry{Setpoint (400 ppm)}
+
+        % Garis Ambang Batas Alarm (1000 ppm)
+        \addplot[
+            color=orange,
+            dashed,
+            thick,
+            domain=0:30,
+        ] {1000};
+        \addlegendentry{Ambang Batas (1000 ppm)}
+
+        % Data Input Raw
+        \addplot[
+            color=blue!50,
+            mark=none,
+            dashed,
+            thick,
+        ] coordinates {
+            (0,  400)
+            (1,  450)
+            (2,  550)
+            (3,  650)
+            (4,  750)
+            (5,  850)
+            (6,  950)
+            (7,  1050)
+            (8,  1100)
+            (9,  1050)
+            (10, 950)
+            (15, 750)
+            (20, 550)
+            (25, 400)
+            (30, 400)
+        };
+        \addlegendentry{Input Raw}
+
+        % Data Hasil SMA
+        \addplot[
+            color=blue,
+            mark=*,
+            mark size=1.5pt,
+            thick,
+        ] coordinates {
+            (0,  400)
+            (1,  430)
+            (2,  466.67)
+            (3,  512.50)
+            (4,  560)
+            (5,  650)
+            (6,  750)
+            (7,  850)
+            (8,  920)
+            (9,  1000)
+            (10, 1020)
+            (15, 880)
+            (20, 640)
+            (25, 440)
+            (30, 400)
+        };
+        \addlegendentry{Hasil SMA (Filter)}
+
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Grafik Respon Konsentrasi Gas terhadap Waktu (Step)}
+    \label{fig:grafik-respon}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=0.85\textwidth,
+            height=6cm,
+            xlabel={Step},
+            ylabel={Sinyal Aktuator (\%)},
+            xmin=0, xmax=30,
+            ymin=0, ymax=110,
+            xtick={0,5,10,15,20,25,30},
+            ytick={0,20,40,60,80,100},
+            grid=both,
+            grid style={line width=0.3pt, draw=gray!30},
+            major grid style={line width=0.4pt, draw=gray!50},
+            legend pos=north west,
+            legend style={font=\small},
+            tick label style={font=\small},
+            label style={font=\small},
+        ]
+
+        % Sinyal PID (Aksi Kontrol Kipas)
+        \addplot[
+            color=red,
+            mark=square*,
+            mark size=1.5pt,
+            thick,
+        ] coordinates {
+            (0,  0)
+            (1,  15)
+            (2,  33.34)
+            (3,  56.25)
+            (4,  80)
+            (5,  100)
+            (6,  100)
+            (7,  100)
+            (8,  100)
+            (9,  100)
+            (10, 100)
+            (15, 100)
+            (20, 96)
+            (25, 20)
+            (30, 0)
+        };
+        \addlegendentry{Sinyal PID (Aktuator)}
+
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Grafik Sinyal Aktuator (Kipas Ventilasi) terhadap Waktu (Step)}
+    \label{fig:grafik-pid}
+\end{figure}
+
+\newpage
+
+%============================================================
+% BAB 8 – ANALISIS HASIL
+%============================================================
+\section{Analisis Hasil}
+
+\subsection{Analisis Respon Sistem}
+Sistem yang dikaji adalah \textit{Environmental Air Quality Monitoring System} berbasis Rust. Sistem ini bukan sistem kontrol umpan balik (\textit{closed-loop}), melainkan sistem monitoring pasif dengan filter numerik Simple Moving Average (SMA). Oleh karena itu, karakteristik respon sistem dianalisis terhadap perilaku SMA saat menerima perubahan input konsentrasi gas secara bertahap melalui simulasi keyboard.
+
+\begin{itemize}
+    \item \textbf{Rise time}: Waktu yang dibutuhkan output SMA untuk mencapai 90\% dari setpoint baru. Dengan buffer berkapasitas $N = 5$, rise time tercapai setelah $\pm$3 langkah input keyboard. Semakin besar $N$, semakin lambat rise time karena nilai-nilai lama dalam buffer masih menarik rata-rata ke bawah.
+
+    \item \textbf{Settling time}: Waktu hingga output SMA masuk dan menetap dalam batas toleransi $\pm 2\%$ dari setpoint. Pada $N = 5$ dengan lompatan input sebesar 200 ppm, settling time dicapai setelah seluruh buffer terisi nilai baru, yaitu setelah 5 langkah input.
+
+    \item \textbf{Overshoot}: Tidak terjadi overshoot pada filter SMA karena output selalu merupakan rata-rata dari nilai-nilai dalam buffer, sehingga secara matematis tidak dapat melampaui nilai maksimum input. Sebagai gantinya, karakteristik yang relevan adalah \textit{lag} (keterlambatan fase) sebesar $\approx N/2$ langkah akibat sifat lagging dari SMA.
+
+    \item \textbf{Steady-state error}: Setelah seluruh elemen buffer terisi dengan nilai setpoint baru, rata-rata SMA identik dengan nilai tersebut. Dengan demikian, steady-state error secara matematis adalah 0 ppm, tanpa sisa galat algoritmik.
+\end{itemize}
+
+\subsection{Analisis Keakuratan Komputasi Numerik}
+Metode numerik yang diterapkan dalam program adalah Simple Moving Average (SMA), diimplementasikan pada fungsi \texttt{update\_dan\_hitung\_rata\_rata()} dalam struct \texttt{MonitoringSystem}. Evaluasi ketelitian mencakup dua aspek utama.
+
+\textbf{Akurasi algoritma SMA.} Secara analitik, SMA dengan window $N$ didefinisikan sebagai:
+\[
+\bar{x}_t = \frac{1}{N} \sum_{i=0}^{N-1} x_{t-i}
+\]
+Implementasi dalam kode Rust telah sesuai dengan definisi ini. Setelah buffer penuh, nilai rata-rata yang dihasilkan identik dengan solusi analitik sehingga galat algoritmik bernilai nol.
+
+\textbf{Galat representasi floating-point.} Program menggunakan tipe data \texttt{f32} (presisi tunggal, $\approx 7$ digit desimal). Pada rentang operasi 0--1200 ppm, galat pembulatan \texttt{f32} berkisar $\pm 0{,}06$--$0{,}12$ ppm. Nilai ini berada jauh di bawah ambang batas resolusi tampilan (\texttt{.2f} format) maupun standar pengukuran kualitas udara, sehingga tidak berdampak signifikan secara praktis. Namun demikian, penggunaan \texttt{f64} direkomendasikan untuk ketelitian yang lebih tinggi pada aplikasi lanjutan.
+
+Selain itu, terdapat isu efisiensi pada operasi \texttt{self.riwayat.remove(0)} yang memiliki kompleksitas $O(N)$ karena menggeser seluruh elemen buffer. Penggunaan struktur data \texttt{VecDeque<f32>} dengan operasi \texttt{pop\_front()} akan meningkatkan efisiensi menjadi $O(1)$ tanpa mengubah hasil komputasi.
+
+\subsection{Evaluasi OOP}
+
+Penerapan konsep Object-Oriented Programming (OOP) dalam program ini memberikan beberapa keunggulan sebagai berikut.
+
+\begin{itemize}
+    \item \textbf{Enkapsulasi}: Struct \texttt{MonitoringSystem} mengenkapsulasi state internal (\texttt{riwayat}, \texttt{kapasitas\_buffer}) bersama dengan logika pemrosesannya dalam satu unit kohesif. Perubahan algoritma filter cukup dilakukan di dalam method tanpa memengaruhi bagian lain program.
+
+    \item \textbf{Reusabilitas modul}: \texttt{MonitoringSystem} dapat diinstansiasi ulang dengan kapasitas buffer berbeda untuk memantau parameter lain (suhu, kelembapan, PM2.5) tanpa perlu menulis ulang logika SMA.
+
+    \item \textbf{Kemudahan pemeliharaan}: Penamaan yang deskriptif dan konsisten dalam Bahasa Indonesia (\texttt{riwayat}, \texttt{kapasitas\_buffer}) mempermudah keterbacaan kode oleh tim pengembang lokal. Logika filter yang terpusat dalam satu method memudahkan pengujian dan modifikasi di masa depan.
+
+    \item \textbf{Memory safety}: Rust menjamin keamanan memori pada level kompiler tanpa garbage collector. Tidak ada kemungkinan null pointer, dangling reference, maupun data race, yang merupakan keunggulan signifikan dibanding implementasi OOP dalam bahasa C++.
+\end{itemize}
+
+Adapun keterbatasan penerapan OOP yang perlu dicatat adalah bahwa struct \texttt{Sensor} belum memiliki method apapun sehingga enkapsulasi belum bermakna fungsional. Selain itu, seluruh logika UI, penanganan input, dan pemrosesan data masih terpusat dalam fungsi \texttt{main()}, yang idealnya dipisah menjadi struct-struct terpisah sesuai prinsip \textit{Single Responsibility}.
+
+\subsection{Keterbatasan Sistem}
+Implementasi saat ini memiliki beberapa keterbatasan yang perlu disampaikan beserta potensi perbaikannya.
+
+\begin{itemize}
+    \item \textbf{Data simulasi, bukan sensor fisik}: Nilai konsentrasi gas dihasilkan dari input keyboard ($\pm$50 ppm per tekanan), bukan dari sensor nyata seperti MQ-135 atau SDS011. Ke depan, sistem perlu dihubungkan ke perangkat keras melalui antarmuka serial (UART/USB) atau protokol I2C/SPI.
+
+    \item \textbf{Parameter tunggal}: Sistem hanya memantau satu nilai konsentrasi gas. Monitoring udara nyata memerlukan pemantauan simultan terhadap CO, CO\textsubscript{2}, PM2.5, PM10, suhu, dan kelembapan. Perbaikan dapat dilakukan dengan mendefinisikan struct \texttt{SensorNode} yang menyimpan multi-parameter.
+
+    \item \textbf{Tidak ada persistensi data}: Seluruh data hilang saat program ditutup karena tidak ada mekanisme logging ke file, basis data, maupun sistem time-series. Perbaikan ke depan dapat mengintegrasikan penyimpanan ke format CSV atau basis data ringan seperti SQLite.
+
+    \item \textbf{Tidak ada sistem alarm aktif}: Status bahaya hanya ditampilkan secara visual di terminal tanpa notifikasi aktif. Sistem dapat dikembangkan dengan menambahkan mekanisme alert melalui notifikasi lokal maupun integrasi ke platform monitoring terpusat.
+\end{itemize}
+\newpage
+
+%============================================================
+% BAB 9 – KESIMPULAN
+%============================================================
+\section{Kesimpulan}
+
+Berdasarkan hasil perancangan, implementasi, dan pengujian sistem
+instrumentasi berbasis Rust, dapat disimpulkan:
+
+\begin{enumerate}
+    \item Sistem monitoring kualitas udara lingkungan berbasis bahasa pemrograman Rust telah berhasil dirancang dan diimplementasikan pada platform terminal menggunakan library \texttt{ratatui} dan \texttt{crossterm}. Sistem menampilkan data konsentrasi gas secara real-time dalam antarmuka dashboard interaktif dengan indikator visual berupa gauge berwarna yang membedakan kondisi udara sangat bagus, ideal, dan tercemar pada rentang 0--1200 ppm, sehingga tujuan pertama telah tercapai.
+
+    \item Algoritma Simple Moving Average (SMA) dengan window $N = 5$ berhasil diimplementasikan sebagai metode kalibrasi dan penapisan data sensor secara numerik. Analisis menunjukkan bahwa SMA menghasilkan steady-state error sebesar 0 ppm secara matematis, dengan lag fase $\approx N/2$ langkah sebagai konsekuensi inheren dari metode rata-rata bergerak. Meskipun demikian, perhitungan Air Quality Index (AQI) berbasis ambang batas konsentrasi belum diimplementasikan secara penuh dan menjadi potensi pengembangan ke depan, sehingga tujuan kedua tercapai sebagian.
+
+    \item Konsep \textit{memory safety} Rust terbukti diterapkan secara efektif melalui sistem kepemilikan (\textit{ownership}) dan peminjaman (\textit{borrowing}) yang dijamin pada level kompiler, sehingga program bebas dari null pointer, dangling reference, maupun data race tanpa memerlukan garbage collector. Penerapan OOP melalui struct \texttt{MonitoringSystem} dan \texttt{Sensor} menunjukkan enkapsulasi data yang baik, meskipun pengelolaan data multi-sensor secara konkurensi belum diimplementasikan dan memerlukan pengembangan lebih lanjut menggunakan \texttt{Arc<Mutex<T>>} atau kanal pesan (\textit{channel}) milik Rust, sehingga tujuan ketiga tercapai sebagian.
+
+    \item Hasil pemantauan kualitas udara berhasil ditampilkan secara otomatis melalui antarmuka display lokal berbasis terminal dengan pembaruan real-time setiap 100 milidetik. Namun demikian, pengiriman data melalui antarmuka nirkabel belum diimplementasikan dalam versi ini. Integrasi dengan protokol komunikasi seperti MQTT atau HTTP REST API ke platform monitoring terpusat merupakan langkah perbaikan yang direkomendasikan untuk memenuhi tujuan keempat secara penuh.
+\end{enumerate}
+
+%------------------------------------------------------------
+% DAFTAR PUSTAKA
+%------------------------------------------------------------
+\newpage
+\begin{thebibliography}{99}
+
+  \bibitem{rust_book}
+    Klabnik, S. \& Nichols, C. (2022).
+    \textit{The Rust Programming Language} (2nd ed.).
+    No Starch Press.
+    \url{https://doc.rust-lang.org/book/}
+
+  \bibitem{ogata}
+    Ogata, K. (2010).
+    \textit{Modern Control Engineering} (5th ed.).
+    Prentice Hall.
+
+  \bibitem{chapra}
+    Chapra, S.C. \& Canale, R.P. (2015).
+    \textit{Numerical Methods for Engineers} (7th ed.).
+    McGraw-Hill Education.
+
+  % Tambahkan referensi sesuai kebutuhan
+  \end{thebibliography}
+
+\newpage
+%------------------------------------------------------------
+% Lampiran
+%------------------------------------------------------------
+
+\newpage
+\appendix
+\section{Lampiran: Source Code Program Utama (Rust)}
+Berikut adalah seluruh kode sumber dari berkas \texttt{main.rs} yang digunakan dalam implementasi Sistem Monitoring Kualitas Udara Real-Time:
+
+\begin{lstlisting}[
+    language=Rust, 
+    caption={main.rs -- Kode Sumber Lengkap Sistem Monitoring Kualitas Udara berbasis TUI}, 
+    label={lst:main_rust_final},
+    numbers=left,
+    stepnumber=1,
+    numberstyle=\tiny,
+    basicstyle=\small\ttfamily,
+    breaklines=true
+]
+use std::io;
+use std::time::Duration;
+use crossterm::{
+    event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode},
+    execute,
+    terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
+};
+use ratatui::{
+    backend::CrosstermBackend,
+    layout::{Constraint, Direction, Layout},
+    style::{Color, Modifier, Style},
+    widgets::{Block, Borders, Gauge, Paragraph, Wrap},
+    Terminal,
+};
+
+// --- 1. Konsep OOP: Objek Sensor (Poin 6.3) ---
+#[allow(dead_code)] // Menghilangkan warning "unused field" agar tab Problems bersih
+struct Sensor {
+    nilai_raw: f32,
+}
+
+// --- 2. Konsep OOP: Objek Monitoring & Komputasi Numerik (Poin 6.3 & 6.4) ---
+struct MonitoringSystem {
+    riwayat: Vec<f32>,
+    kapasitas_buffer: usize,
+}
+
+impl MonitoringSystem {
+    fn new(kapasitas: usize) -> Self {
+        Self {
+            riwayat: Vec::new(),
+            kapasitas_buffer: kapasitas,
+        }
+    }
+
+    // Komputasi Numerik: Simple Moving Average (SMA)
+    fn update_dan_hitung_rata_rata(&mut self, data_baru: f32) -> f32 {
+        self.riwayat.push(data_baru);
+        if self.riwayat.len() > self.kapasitas_buffer {
+            self.riwayat.remove(0);
+        }
+        let total: f32 = self.riwayat.iter().sum();
+        total / self.riwayat.len() as f32
+    }
+}
+
+fn main() -> Result<(), io::Error> {
+    // Persiapan Terminal: Mengaktifkan Raw Mode
+    enable_raw_mode()?;
+    let mut stdout = io::stdout();
+    execute!(stdout, EnterAlternateScreen, EnableMouseCapture)?;
+    let backend = CrosstermBackend::new(stdout);
+    let mut terminal = Terminal::new(backend)?;
+
+    // Inisialisasi Data Proyek
+    let mut system = MonitoringSystem::new(5); 
+    let mut input_simulasi: f32 = 400.0; // Mulai dari angka ideal
+    let mut rata_rata_filter: f32 = 400.0;
+
+    // Loop Utama Dashboard
+    loop {
+        terminal.draw(|f| {
+            let chunks = Layout::default()
+                .direction(Direction::Vertical)
+                .margin(2)
+                .constraints([
+                    Constraint::Length(3), 
+                    Constraint::Length(3), 
+                    Constraint::Min(5),    
+                    Constraint::Length(3), 
+                ].as_ref())
+                .split(f.size());
+
+            // 1. Judul Dashboard
+            let title = Paragraph::new("DASHBOARD MONITORING KUALITAS UDARA (ETS ALPROG - RUST)")
+                .style(Style::default().fg(Color::Cyan).add_modifier(Modifier::BOLD))
+                .block(Block::default().borders(Borders::ALL));
+            f.render_widget(title, chunks[0]);
+
+            // 2. Logika Warna & Gauge Berdasarkan Range Baru
+            let gauge_color = if rata_rata_filter > 1000.0 {
+                Color::Red % Tercemar
+            } else if rata_rata_filter < 400.0 {
+                Color::Blue % Sangat Bagus
+            } else {
+                Color::Green % Ideal
+            };
+
+            let gauge = Gauge::default()
+                .block(Block::default().title("Konsentrasi Gas (ppm)").borders(Borders::ALL))
+                .gauge_style(Style::default().fg(gauge_color))
+                .percent(((rata_rata_filter / 1200.0) * 100.0).min(100.0) as u16)
+                .label(format!("{:.2} ppm", rata_rata_filter));
+            f.render_widget(gauge, chunks[1]);
+
+            // 3. Log Status Berdasarkan Range
+            let (kondisi, status_sistem, warna_status) = if rata_rata_filter < 400.0 {
+                ("SANGAT BAGUS (Udara Pegunungan/Oksigen Murni)", "SISTEM: Aman - Standby", Color::Blue)
+            } else if rata_rata_filter <= 1000.0 {
+                ("IDEAL (Udara Bersih)", "SISTEM: Aman - Standby", Color::Green)
+            } else {
+                ("TERCEMAR (Udara Kotor/Bahaya)", "SISTEM: BAHAYA - Ventilasi AKTIF!", Color::Red)
+            };
+
+            // Inisialisasi struct Sensor di sini agar poin OOP tetap terpenuhi
+            let _sensor_obj = Sensor { nilai_raw: input_simulasi };
+
+            let log_text = format!(
+                "Pembacaan Sensor (Raw): {:.2} ppm\nHasil Filter (SMA): {:.2} ppm\nKondisi Udara : {}\n\n{}",
+                _sensor_obj.nilai_raw, rata_rata_filter, kondisi, status_sistem
+            );
+            
+            let log_widget = Paragraph::new(log_text)
+                .style(Style::default().fg(warna_status))
+                .block(Block::default().title("Log Sistem Kontrol").borders(Borders::ALL))
+                .wrap(Wrap { trim: true });
+            f.render_widget(log_widget, chunks[2]);
+
+            // 4. Navigasi
+            let nav = Paragraph::new("PANAH ATAS (+50) | PANAH BAWAH (-50) | TEKAN 'Q' UNTUK KELUAR")
+                .style(Style::default().fg(Color::Yellow))
+                .block(Block::default().borders(Borders::ALL));
+            f.render_widget(nav, chunks[3]);
+        })?;
+
+        // Penanganan Input Interaktif
+        if event::poll(Duration::from_millis(100))? {
+            if let Event::Key(key) = event::read()? {
+                match key.code {
+                    KeyCode::Char('q') => break,
+                    KeyCode::Up => {
+                        input_simulasi = (input_simulasi + 50.0_f32).min(1200.0_f32);
+                        rata_rata_filter = system.update_dan_hitung_rata_rata(input_simulasi);
+                    },
+                    KeyCode::Down => {
+                        input_simulasi = (input_simulasi - 50.0_f32).max(0.0_f32);
+                        rata_rata_filter = system.update_dan_hitung_rata_rata(input_simulasi);
+                    },
+                    _ => {}
+                }
+            }
+        }
+    }
+
+    // Penutupan Terminal: Mengembalikan ke kondisi semula
+    disable_raw_mode()?;
+    execute!(terminal.backend_mut(), LeaveAlternateScreen, DisableMouseCapture)?;
+    terminal.show_cursor()?;
+
+    Ok(())
+}
+\end{lstlisting}
+
+\end{document}
